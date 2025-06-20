@@ -51,7 +51,7 @@ export class ClerkAuthGuard implements CanActivate {
         });
       });
 
-      request.user = decoded;
+      request.user = decoded as ClerkUserPayload;
       return true;
     } catch (err) {
       console.error(err);

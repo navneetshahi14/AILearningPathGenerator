@@ -7,7 +7,7 @@ import { LearningPathModule } from './learning-path/learning-path.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MailModule } from './common/mail/mail.module';
-import { ProgessModule } from './progess/progess.module';
+import { ProgressModule } from './progess/progress.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { ProgessModule } from './progess/progess.module';
     LearningPathModule,
     SchedulerModule,
     MailModule,
-    ProgessModule,
+    ProgressModule,
   ],
 })
 export class AppModule {}

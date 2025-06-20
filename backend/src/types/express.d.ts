@@ -1,4 +1,4 @@
-import { ClerkUserPayload } from '../common/guards/clerk-auth.guard'; // or wherever you defined the payload type
+import { ClerkUserPayload } from '../common/guards/clerk-auth.guard';
 
 declare module 'express-serve-static-core' {
   interface Request {

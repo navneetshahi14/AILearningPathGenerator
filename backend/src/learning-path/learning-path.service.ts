@@ -6,17 +6,23 @@ import {
 } from './Schema/learning-path.schema';
 import { Model } from 'mongoose';
 import moment from 'moment';
+import { ProgressService } from 'src/progess/progress.service';
 
 @Injectable()
 export class LearningPathService {
   constructor(
     @InjectModel(LearningPath.name)
     private learningPath: Model<LearningPathDocument>,
+    private progressService: ProgressService,
   ) {}
 
   async createPath(
     title: string,
-    steps: string[],
+    steps: {
+      title: string;
+      status: string;
+      completedAt: Date | null;
+    }[],
     userId: string,
     estimatedDuration?: string,
   ) {
@@ -39,6 +45,7 @@ export class LearningPathService {
   }
 
   async UpdateStatus(
+    userId: string,
     learningPathId: string,
     stepIndex: number,
     status: 'pending' | 'done',
@@ -48,6 +55,12 @@ export class LearningPathService {
 
     path.steps[stepIndex].status = status;
     path.steps[stepIndex].completedAt = moment().toDate();
-    return path.save();
+    await path.save();
+
+    if (status === 'done') {
+      await this.progressService.rewardUser(userId, 10);
+    }
+
+    return path;
   }
 }
