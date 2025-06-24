@@ -1,8 +1,6 @@
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
 import { Types, Document } from 'mongoose';
 
-export type SchedulerDocument = Scheduler & Document;
-
 @Schema({ timestamps: true })
 export class Scheduler {
   @Prop({ type: Types.ObjectId, ref: 'LearningPath', required: true })
@@ -12,4 +10,5 @@ export class Scheduler {
   reminderTime: Date;
 }
 
+export type SchedulerDocument = Scheduler & Document;
 export const SchedulerSchema = SchemaFactory.createForClass(Scheduler);

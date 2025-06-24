@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-export type UserProgressDocument = UserProgress & Document;
-
 @Schema({ timestamps: true })
 export class UserProgress {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true, unique: true })
@@ -27,4 +25,5 @@ export class UserProgress {
   lastActivity: Date;
 }
 
+export type UserProgressDocument = UserProgress & Document;
 export const UserProgressSchema = SchemaFactory.createForClass(UserProgress);

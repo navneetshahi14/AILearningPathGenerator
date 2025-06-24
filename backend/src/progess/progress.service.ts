@@ -11,10 +11,10 @@ import { UserProgress, UserProgressDocument } from './Schema/progress.schema';
 @Injectable()
 export class ProgressService {
   constructor(
-    @InjectModel(LearningPath.name)
-    private learningPathModel: Model<LearningPathDocument>,
     @InjectModel(UserProgress.name)
     private progressModel: Model<UserProgressDocument>,
+    @InjectModel(LearningPath.name)
+    private learningPathModel: Model<LearningPathDocument>,
   ) {}
 
   async rewardUser(userId: string, xpEarned = 10) {

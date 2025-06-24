@@ -1,7 +1,11 @@
-import { ClerkUserPayload } from '../common/guards/clerk-auth.guard';
+// import { ClerkUserPayload } from '../src/common/guards/clerk-auth.guard';
 
-declare module 'express-serve-static-core' {
+declare namespace Express {
   interface Request {
-    user?: ClerkUserPayload;
+    user?: {
+      _id: string;
+      email?: string;
+      [key: string]: any;
+    };
   }
 }

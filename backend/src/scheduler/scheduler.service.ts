@@ -2,13 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Scheduler, SchedulerDocument } from './Schema/schedular.schema';
 import { Model } from 'mongoose';
-import {
-  LearningPath,
-  LearningPathDocument,
-} from 'src/learning-path/Schema/learning-path.schema';
+import { LearningPathDocument } from 'src/learning-path/Schema/learning-path.schema';
 import { Cron } from '@nestjs/schedule';
 import moment from 'moment';
-import { User, UserDocument } from 'src/auth/Schema/user.schema';
 import { MailService } from 'src/common/mail/mail.service';
 
 @Injectable()
@@ -16,10 +12,6 @@ export class SchedulerService {
   constructor(
     @InjectModel(Scheduler.name)
     private scheduler: Model<SchedulerDocument>,
-    @InjectModel(LearningPath.name)
-    private learningPath: Model<LearningPathDocument>,
-    @InjectModel(User.name)
-    private UserModel: Model<UserDocument>,
     private readonly mailService: MailService,
   ) {}
 

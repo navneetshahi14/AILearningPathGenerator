@@ -10,5 +10,6 @@ import { User, UserSchema } from './Schema/user.schema';
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService, MongooseModule],
 })
 export class AuthModule {}

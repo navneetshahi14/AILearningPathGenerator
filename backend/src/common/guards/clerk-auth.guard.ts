@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
-import jwksClient from 'jwks-rsa';
+import * as jwksRsa from 'jwks-rsa';
 
-const client = jwksClient({
+const client = jwksRsa({
   jwksUri: process.env.CLERK_JWKS_URI!,
 });
 
@@ -26,7 +26,7 @@ function getKey(
 }
 
 export interface ClerkUserPayload {
-  sub: string;
+  _id: string;
   email?: string;
   [key: string]: any;
 }
@@ -51,7 +51,7 @@ export class ClerkAuthGuard implements CanActivate {
         });
       });
 
-      request.user = decoded as ClerkUserPayload;
+      request.user = decoded;
       return true;
     } catch (err) {
       console.error(err);

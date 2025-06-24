@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-export type LearningPathDocument = LearningPath & Document;
-
 @Schema({ timestamps: true })
 export class LearningPath {
   @Prop({ required: true })
@@ -35,4 +33,5 @@ export class LearningPath {
   createdBy: Types.ObjectId;
 }
 
+export type LearningPathDocument = LearningPath & Document;
 export const LearningPathSchema = SchemaFactory.createForClass(LearningPath);
