@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ChatOpenAI } from '@langchain/openai';
 import { learningPathPrompt } from '../prompt/learning_path.prompt';
 import { HumanMessage } from '@langchain/core/messages';
+import { InferenceClient } from '@huggingface/inference';
 
 function parseSteps(response: string): {
   title: string;
@@ -35,9 +36,11 @@ function parseSteps(response: string): {
 export class OpenAiService {
   private readonly model = new ChatOpenAI({
     temperature: 0.7,
-    model: 'gpt-4',
+    model: 'gpt-4o mini',
     openAIApiKey: process.env.OPENAI_API_KEY,
   });
+
+  client = new InferenceClient(process.env.HUGGING_FACE_API);
 
   async generateSteps(goal: string): Promise<
     {
@@ -54,6 +57,65 @@ export class OpenAiService {
 
     const steps = parseSteps(output);
 
+    return steps;
+  }
+
+  async generateHFSteps(goals: string): Promise<
+    {
+      title: string;
+      status: 'pending';
+      completedAt: Date | null;
+    }[]
+  > {
+    // console.log('hello');
+    const Hmessage = new HumanMessage(learningPathPrompt(goals));
+    // const HF_API_TOKEN = process.env.HUGGING_FACE_API;
+    // const MODEL = 'MiniMaxAI/MiniMax-M1-80k';
+    // console.log(Hmessage.content);
+    // console.log('hello');
+    // const response = await axios.post(
+    //   `https://api-inference.huggingface.co/models/${MODEL}`,
+    //   {
+    //     inputs: Hmessage.content,
+    //     parameters: {
+    //       temperature: 0.7,
+    //       max_new_tokens: 200,
+    //     },
+    //   },
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${HF_API_TOKEN}`,
+    //     },
+    //   },
+    // );
+    // const output =
+    //   (response.data[0].generated_text as string) || (response.data as string);
+    // console.log(output);
+    // const steps = parseSteps(output);
+    // return steps;
+
+    const chatCompletion = await this.client.chatCompletion({
+      provider: 'featherless-ai',
+      model: 'mistralai/Magistral-Small-2506',
+      messages: [
+        {
+          role: 'user',
+          content: Hmessage.content as string,
+        },
+      ],
+    });
+
+    const output = chatCompletion.choices[0].message?.content;
+
+    if (typeof output !== 'string') {
+      console.error(
+        'Unexpected response format from Hugging Face:',
+        chatCompletion.choices[0].message,
+      );
+      throw new Error('Invalid response from Hugging Face model');
+    }
+
+    const steps = parseSteps(output);
     return steps;
   }
 }

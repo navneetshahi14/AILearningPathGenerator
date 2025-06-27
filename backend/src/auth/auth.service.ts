@@ -8,20 +8,25 @@ import { User, UserDocument } from './Schema/user.schema';
 export class AuthService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async findorCreate(clerkUserData: any): Promise<User> {
-    const { clerkUserId, name, email, imageUrl } = clerkUserData;
+  async findorCreate(clerkUserData: any) {
+    try {
+      const { clerkUserId, name, email, imageUrl } = clerkUserData;
+      console.log(clerkUserId, name, email, imageUrl);
 
-    let user = await this.userModel.findOne({ clerkUserId });
+      let user = await this.userModel.findOne({ clerkUserId });
 
-    if (!user) {
-      user = await this.userModel.create({
-        clerkUserId,
-        name,
-        email,
-        imageUrl,
-      });
+      if (!user) {
+        user = await this.userModel.create({
+          clerkUserId,
+          name,
+          email,
+          imageUrl,
+        });
+      }
+
+      return user;
+    } catch (err) {
+      console.error(err);
     }
-
-    return user;
   }
 }

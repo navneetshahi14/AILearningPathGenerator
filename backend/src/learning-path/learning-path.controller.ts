@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { LearningPathService } from './learning-path.service';
@@ -12,26 +11,34 @@ export class LearningPathController {
     private readonly openaiService: OpenAiService,
   ) {}
 
-  @UseGuards(ClerkAuthGuard)
   @Post()
-  async generatePath(@Body('goal') goal: string, @Req() req) {
-    const steps = await this.openaiService.generateSteps(goal);
+  @UseGuards(ClerkAuthGuard)
+  async generatePath(
+    @Body() body: { goal: string },
+    @Req() req: Request & { user?: any },
+  ) {
+    const { goal } = body;
+    const title = goal;
+    const steps = await this.openaiService.generateHFSteps(goal);
     const path = await this.learningPathService.createPath(
-      goal,
+      title,
       steps,
-      req.user._id as string,
+      req.user.sub as string,
     );
     return path;
   }
 
   @UseGuards(ClerkAuthGuard)
   @Get()
-  async getAllPaths(@Req() req) {
-    return this.learningPathService.GetUsersPath(req.user._id);
+  async getAllPaths(@Req() req: Request & { user?: any }) {
+    const data = await this.learningPathService.GetUsersPath(
+      req.user.sub as string,
+    );
+    return data;
   }
 
-  @UseGuards(ClerkAuthGuard)
   @Get('/path')
+  @UseGuards(ClerkAuthGuard)
   async GetParticular(@Body('id') id: string) {
     return this.learningPathService.GetUsersParticularPath(id);
   }

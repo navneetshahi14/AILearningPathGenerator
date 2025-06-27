@@ -16,6 +16,7 @@ Example:
 3. **Explore DOM manipulation and events** — 3 days  
 4. **Learn Git and GitHub** — 2 days  
 5. **Build 2-3 static websites** — 1 week
+6. Total EstimatedDays = 20 days
 
 DO NOT include introduction or conclusion.
   `;

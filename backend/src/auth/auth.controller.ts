@@ -1,4 +1,5 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
 
@@ -15,11 +16,21 @@ interface userData {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post()
   @UseGuards(ClerkAuthGuard)
-  @Get()
-  async checkUser(@Req() req: userData) {
-    console.log(req);
-    const user = await this.authService.findorCreate(req.user);
+  async checkUser(
+    @Body('clerkUserId') clerkUserId: string,
+    @Body('name') name: string,
+    @Body('email') email: string,
+    @Body('imageUrl') imageUrl: string,
+  ) {
+    const userdetails = {
+      clerkUserId,
+      name,
+      email,
+      imageUrl,
+    };
+    const user = await this.authService.findorCreate(userdetails);
 
     return { message: 'User Verified and Stored', user };
   }
