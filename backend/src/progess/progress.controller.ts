@@ -1,4 +1,5 @@
-import { Body, Controller, Get, UseGuards } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { Body, Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ProgressService } from './progress.service';
 import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
 
@@ -14,7 +15,10 @@ export class ProgressController {
 
   @UseGuards(ClerkAuthGuard)
   @Get()
-  async getProgress(@Body('id') id: string) {
-    return this.progressService.getProgress(id);
+  async getProgress(
+    @Body('id') id: string,
+    @Req() req: Request & { user?: any },
+  ) {
+    return this.progressService.getProgress(req.user?.sub as string);
   }
 }

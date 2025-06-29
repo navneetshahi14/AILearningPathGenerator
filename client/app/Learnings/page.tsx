@@ -1,17 +1,23 @@
 'use client'
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
+import { downloadPDF } from "@/utils/downLoadpdf";
 import { useAuth } from "@clerk/nextjs";
 import { Download, Trash, X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+
 
 export default function Page() {
 
     const [close, setClose] = useState(false);
     const { getToken } = useAuth();
     const [isloading, setIsLoading] = useState(false);
-    const [data, setData] = useState([]);
-    const [datastep,setDatastep] = useState([]);
+    const [data, setData] = useState<any>([]);
+    const [datastep, setDatastep] = useState([]);
+    const [dataId, setDataId] = useState('')
+    const [isLoading,setIsloading] = useState<boolean>(false)
+    const [resd,setResd] = useState()
 
     useEffect(() => {
         const allData = async () => {
@@ -27,16 +33,57 @@ export default function Page() {
             })
 
             const resData = await res.json();
-            console.log(resData);
             setData(resData);
             setIsLoading(false);
         }
         allData();
-    }, [])
+    }, [resd])
 
-    const handleClick = async(i:number) =>{
+    const handleClick = async (i: number) => {
         setClose(true);
+        setDataId(data[i]._id);
         setDatastep(data[i].steps);
+    }
+
+    const MarkDone = async (learningPathId: string, stepIndex: number, status: string) => {
+        setIsloading(true)
+        const token = await getToken();
+        const data = await fetch('http://localhost:6969/learning/mark-done', {
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                learningPathId,
+                stepIndex,
+                status
+            })
+        })
+
+        const res = await data.json();
+        console.log(res);
+        setResd(res)
+        setIsloading(false);
+    }
+
+    const clickDelete = async(id:string) =>{
+        let token = await getToken();
+        await fetch(`http://localhost:6969/learning/delete/${id}`,{
+            method:"DELETE",
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+    }
+
+    const clickDownload = async(i:number) =>{
+        const filteredSteps =await data[i].steps.map(({ title, status }:string) => ({
+            title,
+            status,
+          }));
+        downloadPDF(filteredSteps,data[i]?.title);
+        // setDatastep([]);
     }
 
     return (
@@ -59,28 +106,37 @@ export default function Page() {
                                 isloading === true ? (
                                     <div className="">Loading</div>
                                 ) : (
-                                    data.length > 0 && (
-                                        data.map((data:any, i) =>  {  
+                                    data.length > 0 ? (
+                                        data.map((data: any, i: number) => {
                                             let count = 0;
                                             for (let j = 0; j < data.steps.length; j++) {
-                                                if(data?.steps[j]?.status === 'done'){
+                                                if (data?.steps[j]?.status === 'done') {
                                                     count++;
                                                 }
                                             }
-                                            return(
-                                            <div onClick={()=>handleClick(i)} key={i} className="h-[30vh] w-[20vw] overflow-hidden bg-white/50 shadow-xl rounded-xl p-2 flex flex-col justify-between cursor-pointer" >
-                                                <div className="">
-                                                    <h1 className="text-2xl font-bold">{data?.title}</h1>
-                                                    <h2>Total Steps : {data?.steps?.length}</h2>
-                                                    <h2>Completed Steps: {count}</h2>
+                                            return (
+                                                <div key={i} className="h-[30vh] w-[20vw] overflow-hidden bg-white/50 shadow-xl rounded-xl p-2 flex flex-col justify-between cursor-pointer" >
+                                                    <div onClick={() => handleClick(i)}  className="">
+                                                        <h1 className="text-2xl font-bold">{data?.title}</h1>
+                                                        <h2>Total Steps : {data?.steps?.length}</h2>
+                                                        <h2>Completed Steps: {count}</h2>
+                                                    </div>
+                                                    <div className=" flex gap-5 mx-auto">
+                                                        <Button onClick={()=>clickDelete(data?._id)} variant={'secondary'} className="shadow-lg cursor-pointer mb-5"><Trash /></Button>
+                                                        <Button onClick={()=>clickDownload(i)} variant={'secondary'} className="shadow-lg cursor-pointer mb-5"><Download /></Button>
+                                                    </div>
                                                 </div>
-                                                <div className=" flex gap-5 mx-auto">
-                                                    <Button variant={'secondary'} className="shadow-lg cursor-pointer mb-5"><Trash /></Button>
-                                                    <Button variant={'secondary'} className="shadow-lg cursor-pointer mb-5"><Download /></Button>
-                                                </div>
-                                            </div>
-                                            )                 
+                                            )
                                         })
+                                    ):(
+                                        <div className="h-full w-full flex flex-col gap-10 ">
+                                            <h1 className="text-center text-2xl font-bold">Not Created any Path</h1>
+                                            <Button>
+                                                <Link href={'/generatePage'}>
+                                                    Create a Path
+                                                </Link>
+                                            </Button>
+                                        </div>
                                     )
                                 )
                             }
@@ -93,11 +149,18 @@ export default function Page() {
                         </div>
                         <div className="flex flex-col items-center h-[90vh] w-full gap-5 p-2 overflow-auto inset-shadow-2xl inset-shadow-black ">
                             {
-                                datastep.map((data:any,i) => (
+                                datastep.map((data: any, i) => (
                                     <div className="w-[80%] h-[50%] justify-between flex flex-col gap-5 bg-gray-200 p-2 shadow-lg rounded-xl">
                                         <h1 className="text-4xl font-semibold">{data.title}</h1>
                                         <h1 className="">Status: <span className="">{data?.status}</span></h1>
-                                        <Button className="cursor-pointer">Mark as Done</Button>
+                                        {
+                                            data?.status === 'done' ? (
+                                                <div className="w-full h-auto p-2 bg-green-500 text-white border-green-700 border-2 rounded-2xl text-xl font-bold cursor-pointer">Completed</div>
+                                            ) : (
+                                                <Button onClick={() => MarkDone(dataId, i, "done")} className="cursor-pointer">Mark as Done</Button>
+                                            )
+                                        }
+
                                     </div>
                                 ))
                             }

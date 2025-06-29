@@ -5,7 +5,7 @@ import {
   LearningPathDocument,
 } from './Schema/learning-path.schema';
 import { Model } from 'mongoose';
-import moment from 'moment';
+import * as moment from 'moment';
 import { ProgressService } from 'src/progess/progress.service';
 
 @Injectable()
@@ -62,5 +62,9 @@ export class LearningPathService {
     }
 
     return path;
+  }
+
+  async DeletePath(id: string) {
+    return this.learningPath.findByIdAndDelete(id);
   }
 }

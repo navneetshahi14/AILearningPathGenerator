@@ -6,8 +6,8 @@ import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
 export class SchedulerController {
   constructor(private readonly schedulerService: SchedulerService) {}
 
-  @UseGuards(ClerkAuthGuard)
   @Post('reminder/:learningPathId')
+  @UseGuards(ClerkAuthGuard)
   async setReminder(
     @Param('learningPathId') learningPathId: string,
     @Body('reminderTime') reminderTime: string,
@@ -16,8 +16,8 @@ export class SchedulerController {
     return this.schedulerService.setReminder(learningPathId, reminderDate);
   }
 
-  @UseGuards(ClerkAuthGuard)
   @Get('send-reminder')
+  @UseGuards(ClerkAuthGuard)
   async sendReminder() {
     return this.schedulerService.sendReminder();
   }

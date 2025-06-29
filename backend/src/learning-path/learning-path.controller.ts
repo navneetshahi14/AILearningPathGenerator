@@ -1,5 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { LearningPathService } from './learning-path.service';
 import { OpenAiService } from 'src/common/openAi/openai.service';
 import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
@@ -13,18 +24,22 @@ export class LearningPathController {
 
   @Post()
   @UseGuards(ClerkAuthGuard)
-  async generatePath(
-    @Body() body: { goal: string },
-    @Req() req: Request & { user?: any },
-  ) {
+  async generatePath(@Body() body: { goal: string }) {
     const { goal } = body;
-    const title = goal;
     const steps = await this.openaiService.generateHFSteps(goal);
+    return steps;
+  }
+
+  @Post('/start')
+  @UseGuards(ClerkAuthGuard)
+  async startPath(@Body() body: any, @Req() req: Request & { user?: any }) {
+    const { title, steps } = body;
     const path = await this.learningPathService.createPath(
-      title,
+      title as string,
       steps,
       req.user.sub as string,
     );
+
     return path;
   }
 
@@ -41,5 +56,28 @@ export class LearningPathController {
   @UseGuards(ClerkAuthGuard)
   async GetParticular(@Body('id') id: string) {
     return this.learningPathService.GetUsersParticularPath(id);
+  }
+
+  @Post('/mark-done')
+  @UseGuards(ClerkAuthGuard)
+  async MarkDone(
+    @Body()
+    body: any,
+    @Req() req: Request & { user?: any },
+  ) {
+    console.log(body);
+    const { learningPathId, stepIndex, status } = body;
+    return this.learningPathService.UpdateStatus(
+      req.user.sub as string,
+      learningPathId as string,
+      stepIndex as number,
+      status as 'pending' | 'done',
+    );
+  }
+
+  @Delete('/delete/:id')
+  @UseGuards(ClerkAuthGuard)
+  async DeletePATH(@Param('id') id: string) {
+    return this.learningPathService.DeletePath(id);
   }
 }

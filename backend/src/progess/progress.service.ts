@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import moment from 'moment';
+import * as moment from 'moment';
 import { Model } from 'mongoose';
 import {
   LearningPath,
@@ -73,6 +73,6 @@ export class ProgressService {
   }
 
   async getProgress(id: string) {
-    return this.progressModel.findOne({ user: id });
+    return this.progressModel.find({ user: id });
   }
 }

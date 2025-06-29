@@ -1,11 +1,13 @@
 'use client'
 import Navbar from "@/components/Navbar";
 import ProfileSection from "@/components/ProfileSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page(){
 
     const [active,setActive] = useState('profile')
+
+    
 
     return (
         <>

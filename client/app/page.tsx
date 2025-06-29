@@ -24,11 +24,6 @@ export default function Home() {
       }
 
       const token = await getToken();
-      const header = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
       console.log(user, token)
       const req = {
         clerkUserId: user.id,
@@ -36,7 +31,7 @@ export default function Home() {
         email: user.emailAddresses[0].emailAddress,
         imageUrl: user?.imageUrl
       }
-      console.log(req)
+      // console.log(req)
       const response = await fetch('http://localhost:6969/auth',
         {
           method: "POST",
