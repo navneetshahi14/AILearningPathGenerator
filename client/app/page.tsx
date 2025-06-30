@@ -6,16 +6,17 @@ import Navbar from "@/components/Navbar";
 import WhySkillRoute from "@/components/WhySkillRoute";
 import { AppDispatch } from "@/redux/store";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from 'axios';
 import { setUser } from "@/redux/slice/authSlice";
+import { Menu } from "lucide-react";
 
 export default function Home() {
 
   const { user, isSignedIn } = useUser();
   const dispatch = useDispatch<AppDispatch>();
   const { getToken } = useAuth();
+  const [close,setClose] = useState(false)
 
   useEffect(() => {
     const syncUser = async () => {
@@ -24,14 +25,12 @@ export default function Home() {
       }
 
       const token = await getToken();
-      console.log(user, token)
       const req = {
         clerkUserId: user.id,
         name: user.fullName,
         email: user.emailAddresses[0].emailAddress,
         imageUrl: user?.imageUrl
       }
-      // console.log(req)
       const response = await fetch('http://localhost:6969/auth',
         {
           method: "POST",
@@ -50,14 +49,20 @@ export default function Home() {
     syncUser()
   }, [isSignedIn])
 
+  const handleClose = () =>{
+    if(!close){
+      setClose(true)
+    }
+    setClose(false)
+  }
 
   return (
     <>
-      <div className="min-h-screen h-auto relative w-full flex lg:items-center text-xl flex-col bg-amber-200  ">
+      <div className="min-h-screen h-auto relative w-full flex lg:items-center text-xl flex-col bg-amber-200 overflow-hidden ">
         <Navbar />
+        
         <div className="h-full w-full relative">
           <HeroSection />
-
         </div>
         <HowItWorks />
         <WhySkillRoute />

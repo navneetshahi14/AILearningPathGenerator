@@ -67,12 +67,9 @@ export class OpenAiService {
       completedAt: Date | null;
     }[]
   > {
-    // console.log('hello');
     const Hmessage = new HumanMessage(learningPathPrompt(goals));
     // const HF_API_TOKEN = process.env.HUGGING_FACE_API;
     // const MODEL = 'MiniMaxAI/MiniMax-M1-80k';
-    // console.log(Hmessage.content);
-    // console.log('hello');
     // const response = await axios.post(
     //   `https://api-inference.huggingface.co/models/${MODEL}`,
     //   {
@@ -90,7 +87,6 @@ export class OpenAiService {
     // );
     // const output =
     //   (response.data[0].generated_text as string) || (response.data as string);
-    // console.log(output);
     // const steps = parseSteps(output);
     // return steps;
 

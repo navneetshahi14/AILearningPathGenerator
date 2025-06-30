@@ -65,7 +65,6 @@ export class LearningPathController {
     body: any,
     @Req() req: Request & { user?: any },
   ) {
-    console.log(body);
     const { learningPathId, stepIndex, status } = body;
     return this.learningPathService.UpdateStatus(
       req.user.sub as string,

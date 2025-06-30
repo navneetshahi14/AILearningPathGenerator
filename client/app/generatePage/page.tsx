@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { downloadPDF } from "@/utils/downLoadpdf";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -37,26 +38,32 @@ export default function Page() {
         setIsLoading(false)
     }
 
-    const startClick = async() =>{
-        
+    const startClick = async () => {
+
         const token = await getToken();
-        const res = await fetch('http://localhost:6969/learning/start',{
-            method:"POST",
-            headers:{
-                Authorization:`Bearer ${token}`,
-                "Content-Type":"application/json"
+        const res = await fetch('http://localhost:6969/learning/start', {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
             },
-            body:JSON.stringify({
-                title:goal,
-                steps:datastep
+            body: JSON.stringify({
+                title: goal,
+                steps: datastep
             })
         })
         const resdata = await res.json();
-        if(resdata){
+        if (resdata) {
             navigate.push('/Learnings')
         }
     }
 
+    const handleDownload = () => {
+        if (datastep.length > 0) {
+            downloadPDF(datastep, goal);
+        }
+        alert("First Generate the Learning Path");
+    }
 
     return (
         <>
@@ -65,12 +72,12 @@ export default function Page() {
                 <div className="min-h-[100vh] h-auto overflow-auto w-full flex justify-center items-center flex-col  gap-10">
                     <div className="h-[30vh] mt-12 w-full flex flex-col justify-center items-center">
                         <div className="text-center flex flex-col gap-4">
-                            <h1 className="text-6xl font-extrabold">Generate Your Custom Skill Route</h1>
-                            <h4 className="text-xl">What Do You Want to Learn?</h4>
+                            <h1 className="text-6xl 2xl:text-8xl font-extrabold">Generate Your Custom Skill Route</h1>
+                            <h4 className="text-xl 2xl:text-4xl">What Do You Want to Learn?</h4>
                         </div>
                         <div className="w-[80%] flex justify-center items-center gap-5 ">
-                            <Input onChange={(e) => setGoal(e.target.value)} placeholder="Enter what you want to learn" className="w-[60%] border-black" />
-                            <Button onClick={handleClick} className="w-[30%] cursor-pointer text-amber-200 uppercase" variant={'default'}>
+                            <Input onChange={(e) => setGoal(e.target.value)} placeholder="Enter what you want to learn" className="w-[60%] border-black 2xl:text-3xl 2xl:h-auto 2xl:p-1" />
+                            <Button onClick={handleClick} className="w-[30%] 2xl:text-2xl 2xl:h-auto cursor-pointer text-amber-200 uppercase" variant={'default'}>
                                 {
                                     isloading ? "Loading....." : "Generating"
                                 }
@@ -78,7 +85,7 @@ export default function Page() {
                         </div>
                     </div>
                     <div className="min-h-[30vh] w-[80vw] bg-amber-500/40 rounded-3xl shadow-2xl border-black border-[.5px] overflow-hidden p-2 px-5">
-                        <p className="font-bold">
+                        <p className="font-bold 2xl:text-xl">
                             {
                                 datastep.length > 0 ? goal : "Example"
                             }
@@ -86,22 +93,18 @@ export default function Page() {
                         <Accordion
                             type="single"
                             collapsible
-                            className="w-full"
+                            className="w-full "
                         >
                             {
                                 datastep.length > 0 ? (
                                     datastep.map((dat: any, i: number) => (
                                         <>
-                                            <AccordionItem value={`item-${i+1}`}>
+                                            <AccordionItem value={`item-${i + 1}`}>
                                                 <AccordionTrigger>
-                                                    {dat?.title}
-                                                </AccordionTrigger>
-                                                <AccordionContent className="flex flex-col gap-4 text-balance">
-                                                    <p>
-                                                        🕒 Duration: 1 Week
-                                                        🔗 Resources: [freeCodeCamp](#), [MDN Docs](#)
+                                                    <p className="2xl:text-2xl">
+                                                        {dat?.title}
                                                     </p>
-                                                </AccordionContent>
+                                                </AccordionTrigger>
                                             </AccordionItem>
                                         </>
                                     ))
@@ -109,47 +112,31 @@ export default function Page() {
                                     <>
                                         <AccordionItem value="item-1">
                                             <AccordionTrigger>
-                                                Step1: Learn HTML & CSS
-                                            </AccordionTrigger>
-                                            <AccordionContent className="flex flex-col gap-4 text-balance">
-                                                <p>
-                                                    🕒 Duration: 1 Week
-                                                    🔗 Resources: [freeCodeCamp](#), [MDN Docs](#)
+                                                <p className="2xl:text-2xl">
+                                                    Step1: Learn HTML & CSS
                                                 </p>
-                                            </AccordionContent>
+                                            </AccordionTrigger>
                                         </AccordionItem>
                                         <AccordionItem value="item-2">
                                             <AccordionTrigger>
-                                                Step 2: Learn JavaScript Fundamentals
-                                            </AccordionTrigger>
-                                            <AccordionContent className="flex flex-col gap-4 text-balance">
-                                                <p>
-                                                    🕒 Duration: 1 Week
-                                                    🔗 Resources: [freeCodeCamp](#), [MDN Docs](#)
+                                                <p className="2xl:text-2xl">
+                                                    Step 2: Learn JavaScript Fundamentals
                                                 </p>
-                                            </AccordionContent>
+                                            </AccordionTrigger>
                                         </AccordionItem>
                                         <AccordionItem value="item-3">
                                             <AccordionTrigger>
-                                                Step 3: Learn React.js
-                                            </AccordionTrigger>
-                                            <AccordionContent className="flex flex-col gap-4 text-balance">
-                                                <p>
-                                                    🕒 Duration: 1 Week
-                                                    🔗 Resources: [freeCodeCamp](#), [MDN Docs](#)
+                                                <p className="2xl:text-2xl">
+                                                    Step 3: Learn React.js
                                                 </p>
-                                            </AccordionContent>
+                                            </AccordionTrigger>
                                         </AccordionItem>
                                         <AccordionItem value="item-4">
                                             <AccordionTrigger>
-                                                Step 4: Backend (Node.js + Express)
-                                            </AccordionTrigger>
-                                            <AccordionContent className="flex flex-col gap-4 text-balance">
-                                                <p>
-                                                    🕒 Duration: 1 Week
-                                                    🔗 Resources: [freeCodeCamp](#), [MDN Docs](#)
+                                                <p className="2xl:text-2xl">
+                                                    Step 4: Backend (Node.js + Express)
                                                 </p>
-                                            </AccordionContent>
+                                            </AccordionTrigger>
                                         </AccordionItem>
                                     </>
                                 )
@@ -157,10 +144,10 @@ export default function Page() {
                         </Accordion>
                     </div>
                     <div className=" p-2 flex gap-10 ">
-                        <Button onClick={()=>startClick()} className="w-[30vw] cursor-pointer text-xl" variant={'default'}>
+                        <Button onClick={() => startClick()} disabled={!(datastep.length > 0)} className="w-[30vw] h-auto cursor-pointer text-xl 2xl:text-5xl 2xl:p-2" variant={'default'}>
                             Start
                         </Button>
-                        <Button className="w-[30vw] cursor-pointer text-xl" variant={'outline'}>
+                        <Button onClick={handleDownload} disabled={!(datastep.length > 0)} className="w-[30vw] h-auto cursor-pointer text-xl 2xl:text-5xl 2xl:p-2" variant={'outline'}>
                             Export as PDF
                         </Button>
                     </div>

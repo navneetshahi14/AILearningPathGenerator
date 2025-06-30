@@ -11,7 +11,6 @@ export class AuthService {
   async findorCreate(clerkUserData: any) {
     try {
       const { clerkUserId, name, email, imageUrl } = clerkUserData;
-      console.log(clerkUserId, name, email, imageUrl);
 
       let user = await this.userModel.findOne({ clerkUserId });
 
