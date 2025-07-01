@@ -63,8 +63,9 @@ export default function Page() {
     const handleDownload = () => {
         if (datastep.length > 0) {
             downloadPDF(datastep, goal);
+        }else{
+            alert("First Generate the Learning Path");
         }
-        alert("First Generate the Learning Path");
     }
 
     return (
