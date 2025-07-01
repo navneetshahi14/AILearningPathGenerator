@@ -22,7 +22,7 @@ export function ReminderModal({ open, onClose, learningPathId }: ReminderModalPr
             const token = await getToken()
             console.log(token)
             setLoading(true);
-            await fetch(`http://localhost:6969/scheduler/reminder/${learningPathId}`, {
+            await fetch(`https://ailearningpathgenerator.onrender.com/scheduler/reminder/${learningPathId}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,

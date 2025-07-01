@@ -5,7 +5,7 @@ import * as express from 'express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:3000'], // <-- yahan apna frontend URL daal
+    origin: ['https://ai-learning-path-generator.vercel.app/'], // <-- yahan apna frontend URL daal
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });

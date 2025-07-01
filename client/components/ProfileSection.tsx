@@ -39,7 +39,7 @@ export default function ProfileSection() {
 
         const fetchProgress = async () => {
             const token = await getToken();
-            const res = await fetch('http://localhost:6969/progress', {
+            const res = await fetch('https://ailearningpathgenerator.onrender.com/progress', {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -53,7 +53,7 @@ export default function ProfileSection() {
         const allData = async () => {
             const token = await getToken();
 
-            const res = await fetch(`http://localhost:6969/learning`, {
+            const res = await fetch(`https://ailearningpathgenerator.onrender.com/learning`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
