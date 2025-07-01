@@ -1,4 +1,3 @@
-```md
 # 🧠 AI Learning Path Generator
 
 An intelligent and dynamic learning assistant that creates **personalized AI-generated learning paths** tailored to users' goals, levels, and pace — combining power from OpenAI, LangChain, and Hugging Face.
