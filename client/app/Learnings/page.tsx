@@ -70,7 +70,7 @@ export default function Page() {
         const data = await fetch('https://ailearningpathgenerator.onrender.com/learning/mark-done', {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "applinse sectioncation/json",
                 Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({
