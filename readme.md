@@ -3,7 +3,7 @@
 
 An intelligent and dynamic learning assistant that creates **personalized AI-generated learning paths** tailored to users' goals, levels, and pace — combining power from OpenAI, LangChain, and Hugging Face.
 
-![AppHomePage](./client/public/1.png)
+![AppHomePage](/client/public/1.png)
 
 
 ---
@@ -48,10 +48,10 @@ An intelligent and dynamic learning assistant that creates **personalized AI-gen
 ## 📸 Screenshots
 
 *(Add real screenshots or screen recordings of your app in use here)*
-![Screenshot from 2025-07-01 16-51-12](./client/public/1.png)
-![Screenshot from 2025-07-01 16-42-25](./client/public/2.png)
-![Screenshot from 2025-07-01 17-25-18](./client/public/3.png)
-![Screenshot from 2025-07-01 17-25-24](./client/public/4.png)
+![Screenshot from 2025-07-01 16-51-12](/client/public/1.png)
+![Screenshot from 2025-07-01 16-42-25](/client/public/2.png)
+![Screenshot from 2025-07-01 17-25-18](/client/public/3.png)
+![Screenshot from 2025-07-01 17-25-24](/client/public/4.png)
 
 
 ---
