@@ -80,6 +80,7 @@ export default function Page() {
         const res = await data.json();
         console.log(res);
         setResd(res)
+        setClose(false);
         setIsloading(false);
     }
 
