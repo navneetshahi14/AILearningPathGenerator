@@ -1,11 +1,10 @@
-Here’s your cleaned and properly formatted `README.md` in **Markdown format** (already in Markdown but with extra corrections like consistent code block closings and indentation):
-
 ```md
 # 🧠 AI Learning Path Generator
 
 An intelligent and dynamic learning assistant that creates **personalized AI-generated learning paths** tailored to users' goals, levels, and pace — combining power from OpenAI, LangChain, and Hugging Face.
 
-![App Banner](https://your-banner-url-if-any.com)
+![Screenshot from 2025-07-01 16-51-12](https://github.com/user-attachments/assets/deb57ae8-18b5-4574-8dcb-c5f9e09b555b)
+
 
 ---
 
@@ -49,28 +48,11 @@ An intelligent and dynamic learning assistant that creates **personalized AI-gen
 ## 📸 Screenshots
 
 *(Add real screenshots or screen recordings of your app in use here)*
+![Screenshot from 2025-07-01 16-51-12](https://github.com/user-attachments/assets/c028738f-4534-4e97-aa1a-bec14c0fc01c)
+![Screenshot from 2025-07-01 16-42-25](https://github.com/user-attachments/assets/747cd7fe-985a-4102-a665-3516d9cc3674)
+![Screenshot from 2025-07-01 17-25-18](https://github.com/user-attachments/assets/42fc89c9-5cf6-4bec-a54a-1c0f1b8c318f)
+![Screenshot from 2025-07-01 17-25-24](https://github.com/user-attachments/assets/ef4b43c8-d6f5-46c4-b6c9-df8a3812268e)
 
----
-
-## 📂 Folder Structure
-
-```
-
-/frontend
-├── components/
-├── pages/
-├── hooks/
-├── lib/
-└── app/
-
-/backend
-└── src/
-├── modules/
-├── controllers/
-├── services/
-└── schemas/
-
-````
 
 ---
 
