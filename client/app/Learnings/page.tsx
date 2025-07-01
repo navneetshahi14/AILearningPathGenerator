@@ -84,7 +84,6 @@ export default function Page() {
         console.log(res);
         setResd(res)
         setIsloading(false);
-        setClose(false);
     }
 
     const clickDelete = async (id: string) => {
