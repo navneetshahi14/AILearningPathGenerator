@@ -214,7 +214,7 @@ export default function Page() {
                                             onClick={() => MarkDone(dataId, idx, "done")} // your function to mark step as done
                                         >
                                             {
-                                                isLoading ? (
+                                                !isLoading ? (
                                                     <p className="">Mark as Done</p>
                                                 ) : (
                                                     <p className="">Loading....</p>
