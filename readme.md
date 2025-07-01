@@ -124,6 +124,3 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 Feel free to use, modify, and distribute it with attribution.
 
 ```
-
-You can copy this and paste it into your `README.md`. Let me know if you want to add **GIF demo**, **badges**, or a **"What's next?"** section.
-```
