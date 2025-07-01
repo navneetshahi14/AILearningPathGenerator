@@ -34,6 +34,7 @@ export default function Page() {
     const [dataId, setDataId] = useState('')
     const [isLoading, setIsloading] = useState<boolean>(false)
     const [resd, setResd] = useState()
+    const [deleted,setDeleted] = useState<boolean>(false)
 
     useEffect(() => {
         const allData = async () => {
@@ -53,7 +54,7 @@ export default function Page() {
             setIsLoading(false);
         }
         allData();
-    }, [resd,getToken])
+    }, [resd,getToken,deleted])
 
     const handleClick = async (i: number) => {
         setClose(true);
@@ -92,6 +93,7 @@ export default function Page() {
                 Authorization: `Bearer ${token}`
             }
         })
+        setDeleted(!deleted)
     }
 
     const clickDownload = async (i: number) => {
