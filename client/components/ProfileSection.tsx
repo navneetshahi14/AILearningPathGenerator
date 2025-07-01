@@ -59,7 +59,7 @@ export default function ProfileSection() {
             <div className="w-full lg:w-[20%] lg:h-[50%] py-2 lg:p-0 bg-white/30 rounded-xl shadow-xl flex flex-col justify-center items-center gap-5">
                 <Image
                     alt="User Profile"
-                    src={user?.imageUrl || '/Ai.jpg'}
+                    src={user?.imageUrl || '/user.jpg'}
                     height={120}
                     width={120}
                     className="rounded-full 2xl:h-[20vh] 2xl:w-[10vw] object-cover shadow-2xl"
@@ -113,24 +113,33 @@ export default function ProfileSection() {
                         <h1 className="text-lg 2xl:text-4xl font-semibold">XP</h1>
                         <h3>
                             {
-                                data.map((dat: any, i: number) => {
-                                    let xp = 0
-                                    data.forEach((data: any) => {
-                                        xp = xp + data?.xp
-                                    });
-                                    return (
-                                        <p className="2xl:text-3xl" key={i}>{xp}</p>
-                                    )
-                                })
+                                data.length > 0 ?(
+                                    data.map((dat: any, i: number) => {
+                                        let xp = 0
+                                        data.forEach((data: any) => {
+                                            xp = xp + data?.xp
+                                        });
+                                        return (
+                                            <p className="2xl:text-3xl" key={i}>{xp}</p>
+                                        )
+                                    })
+
+                                ):(
+                                    <p className="2xl:text-3xl">{0}</p>
+                                )
                             }
                         </h3>
                     </div>
                     <div>
                         <h1 className="text-lg 2xl:text-4xl font-semibold">Level</h1>
                         {
-                            data.slice(0, 1).map((dat: any, i: number) => (
-                                <h1 key={i} className="2xl:text-3xl">{dat.level}</h1>
-                            ))
+                            data.length> 0 ?(
+                                data.slice(0, 1).map((dat: any, i: number) => (
+                                    <h1 key={i} className="2xl:text-3xl">{dat.level}</h1>
+                                ))
+                            ):(
+                                <h1 className="2xl:text-3xl">{0}</h1>
+                            )
                         }
                     </div>
                 </div>
@@ -138,9 +147,13 @@ export default function ProfileSection() {
                 <div className="flex flex-col w-[80%] gap-2  ">
                     <h1 className=" text-lg 2xl:text-4xl font-semibold">Learning Streak</h1>
                     {
-                        data.slice(0, 1).map((dat: any, i: number) => (
-                            <h1 className="2xl:text-3xl">{dat.currentStreak} days</h1>
-                        ))
+                        data.length > 0?(
+                            data.slice(0, 1).map((dat: any, i: number) => (
+                                <h1 key={i} className="2xl:text-3xl">{dat.currentStreak} days</h1>
+                            ))
+                        ):(
+                            <h1 className="2xl:text-3xl">{0} days</h1>
+                        )
                     }
                 </div>
             </div>
