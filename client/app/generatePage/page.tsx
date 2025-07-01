@@ -81,7 +81,7 @@ export default function Page() {
                             <Input onChange={(e) => setGoal(e.target.value)} placeholder="Enter what you want to learn" className="w-[60%] border-black 2xl:text-3xl 2xl:h-auto 2xl:p-1" />
                             <Button onClick={handleClick} className="w-[30%] 2xl:text-2xl 2xl:h-auto cursor-pointer text-amber-200 uppercase" variant={'default'}>
                                 {
-                                    isloading ? "Loading....." : "Generating"
+                                    isloading ? "Loading....." : "Generate"
                                 }
                             </Button>
                         </div>
