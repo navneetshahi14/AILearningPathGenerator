@@ -32,7 +32,7 @@ export default function Page() {
     const [data, setData] = useState<datainterface[]>([]);
     const [datastep, setDatastep] = useState<datastepsinterface[]>([]);
     const [dataId, setDataId] = useState('')
-    const [isLoading, setIsloading] = useState<boolean>(false)
+    const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
     const [resd, setResd] = useState()
     const [deleted,setDeleted] = useState<boolean>(false)
 
@@ -63,7 +63,6 @@ export default function Page() {
     }
 
     const MarkDone = async (learningPathId: string, stepIndex: number, status: string) => {
-        setIsloading(true)
         const token = await getToken();
         const data = await fetch('https://ailearningpathgenerator.onrender.com/learning/mark-done', {
             method: "POST",
@@ -82,7 +81,6 @@ export default function Page() {
         console.log(res);
         setResd(res)
         setClose(false);
-        setIsloading(false);
     }
 
     const clickDelete = async (id: string) => {
@@ -211,13 +209,16 @@ export default function Page() {
                                     ) : (
                                         <button
                                             className="bg-gray-900 hover:bg-gray-700 transition-all text-white px-4 py-2 rounded-lg text-sm w-max"
-                                            onClick={() => MarkDone(dataId, idx, "done")} // your function to mark step as done
+                                            onClick={() => {
+                                                setLoadingIndex(idx);
+                                                MarkDone(dataId, idx, "done").finally(() => setLoadingIndex(null));
+                                              }}
                                         >
                                             {
-                                                !isLoading ? (
-                                                    <p className="">Mark as Done</p>
-                                                ) : (
+                                                loadingIndex === idx  ? (
                                                     <p className="">Loading....</p>
+                                                ) : (
+                                                    <p className="">Mark as Done</p>
                                                 )
                                             }
 
