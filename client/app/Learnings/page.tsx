@@ -8,14 +8,29 @@ import { Download, Trash, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+interface datastepsinterface {
+    _id?: string;
+    title: string;
+    status: string;
+    completedAt: Date | null;
+}
+
+interface datainterface {
+    title: string;
+    steps: datastepsinterface[];
+    status: string;
+    createdBy: string;
+    _id: string;
+}
+
 
 export default function Page() {
     const [showModal, setShowModal] = useState(false);
     const [close, setClose] = useState(false);
     const { getToken } = useAuth();
     const [isloading, setIsLoading] = useState(false);
-    const [data, setData] = useState<any>([]);
-    const [datastep, setDatastep] = useState([]);
+    const [data, setData] = useState<datainterface[]>([]);
+    const [datastep, setDatastep] = useState<datastepsinterface[]>([]);
     const [dataId, setDataId] = useState('')
     const [isLoading, setIsloading] = useState<boolean>(false)
     const [resd, setResd] = useState()
@@ -25,7 +40,7 @@ export default function Page() {
             setIsLoading(true)
             const token = await getToken();
 
-            const res = await fetch(`http://localhost:6969/learning`, {
+            const res = await fetch(`https://ailearningpathgenerator.onrender.com/learning`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,18 +53,21 @@ export default function Page() {
             setIsLoading(false);
         }
         allData();
-    }, [resd])
+    }, [resd,getToken])
 
     const handleClick = async (i: number) => {
         setClose(true);
-        setDataId(data[i]._id);
-        setDatastep(data[i].steps);
+        if (data && data[i]) {
+            setDataId(data[i]?._id);
+            setDatastep(data[i].steps);
+        }
+
     }
 
     const MarkDone = async (learningPathId: string, stepIndex: number, status: string) => {
         setIsloading(true)
         const token = await getToken();
-        const data = await fetch('http://localhost:6969/learning/mark-done', {
+        const data = await fetch('https://ailearningpathgenerator.onrender.com/learning/mark-done', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -69,8 +87,8 @@ export default function Page() {
     }
 
     const clickDelete = async (id: string) => {
-        let token = await getToken();
-        await fetch(`http://localhost:6969/learning/delete/${id}`, {
+        const token = await getToken();
+        await fetch(`https://ailearningpathgenerator.onrender.com/learning/delete/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -79,10 +97,10 @@ export default function Page() {
     }
 
     const clickDownload = async (i: number) => {
-        const filteredSteps = await data[i].steps;
-        console.log(filteredSteps);
-        downloadPDF(filteredSteps, data[i]?.title);
-        // setDatastep([]);
+        if (!data || !data[i]) return;
+
+        const filteredSteps = data[i].steps;
+        downloadPDF(filteredSteps, data[i].title);
     }
 
     return (
@@ -101,7 +119,7 @@ export default function Page() {
                                     <div className="text-xl 2xl:text-4xl">Loading</div>
                                 ) : (
                                     data.length > 0 ? (
-                                        data.map((data: any, i: number) => {
+                                        data.map((data: datainterface, i: number) => {
                                             let count = 0;
                                             for (let j = 0; j < data.steps.length; j++) {
                                                 if (data?.steps[j]?.status === 'done') {
@@ -137,7 +155,7 @@ export default function Page() {
                         </div>
                     </div>
 
-                    <div className={`${close ? '' : 'hidden'} absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/50 min-h-screen w-full ${showModal?"":"z-[9999]"} flex flex-col lg:justify-center items-center overflow-hidden p-2`}>
+                    <div className={`${close ? '' : 'hidden'} absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/50 min-h-screen w-full ${showModal ? "" : "z-[9999]"} flex flex-col lg:justify-center items-center overflow-hidden p-2`}>
                         <div className="absolute right-10 top-5">
                             <X onClick={() => setClose(false)} className="text-2xl font-bold cursor-pointer" />
                         </div>
@@ -169,7 +187,7 @@ export default function Page() {
                         </div> */}
                         {/* <div className="space-y-6"> */}
                         <div className="flex flex-col h-[90vh] w-full items-center gap-5 p-2 overflow-auto inset-shadow-2xl inset-shadow-black ">
-                            {datastep.map((step: any, idx: number) => (
+                            {datastep.map((step: datastepsinterface, idx: number) => (
                                 <div
                                     key={idx}
                                     className="bg-white shadow-md rounded-xl p-4 border-l-4 
@@ -195,7 +213,14 @@ export default function Page() {
                                             className="bg-gray-900 hover:bg-gray-700 transition-all text-white px-4 py-2 rounded-lg text-sm w-max"
                                             onClick={() => MarkDone(dataId, idx, "done")} // your function to mark step as done
                                         >
-                                            Mark as Done
+                                            {
+                                                isLoading ? (
+                                                    <p className="">Mark as Done</p>
+                                                ) : (
+                                                    <p className="">Loading....</p>
+                                                )
+                                            }
+
                                         </button>
                                     )}
                                 </div>

@@ -4,10 +4,6 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import { Cog, Menu } from "lucide-react"
 import { useState } from "react";
 
-type NavbarProps = {
-    closeing: boolean;
-};
-
 
 const Navbar = () => {
     const [closing, setClosing] = useState(false)

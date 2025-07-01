@@ -1,7 +1,6 @@
 'use client'
 import Navbar from "@/components/Navbar";
 import ProfileSection from "@/components/ProfileSection";
-import { useEffect, useState } from "react";
 
 export default function Page() {
 

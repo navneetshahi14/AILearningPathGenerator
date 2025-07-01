@@ -1,4 +1,3 @@
-import SplineScreen from "./Spline";
 
 export default function WhySkillRoute() {
   return (

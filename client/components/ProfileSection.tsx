@@ -4,14 +4,37 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-// import { Link } from "lucide-react";
-import { BarChart, Bar } from "recharts";
+
+interface ProgressdataInterface{
+    user:string;
+    xp:number;
+    level:number;
+    currentStreak:number;
+    longestStreak:number;
+    badge:string[];
+    lastActivity:Date;
+}
+
+interface datastepsinterface {
+    _id?: string;
+    title: string;
+    status: string;
+    completedAt:Date | null;
+}
+
+interface datainterface {
+    title: string;
+    steps: datastepsinterface[];
+    status: string;
+    createdBy: string;
+    _id: string;
+}
 
 export default function ProfileSection() {
     const { user } = useUser();
     const { getToken } = useAuth()
-    const [data, setData] = useState([])
-    const [data1, setData1] = useState([])
+    const [data, setData] = useState<ProgressdataInterface[]>([])
+    const [data1, setData1] = useState<datainterface[]>([])
     useEffect(() => {
 
         const fetchProgress = async () => {
@@ -48,10 +71,10 @@ export default function ProfileSection() {
 
 
         fetchProgress()
-    }, [])
+    }, [getToken])
 
-    const completedPaths = data1.filter((dat: any) => {
-        dat.steps.every((step: any) => step.status === 'done')
+    const completedPaths = data1.filter((dat: datainterface) => {
+        dat.steps.every((step: datastepsinterface) => step.status === 'done')
     })
 
     return (
@@ -76,7 +99,7 @@ export default function ProfileSection() {
                     {
                         data1.length > 0 ? (
 
-                            data1.map((dat: any, i: number) => {
+                            data1.map((dat: datainterface, i: number) => {
                                 let count = 0;
                                 for (let i = 0; i < dat.steps.length; i++) {
                                     if (dat.steps[i].status === 'done') {
@@ -114,9 +137,9 @@ export default function ProfileSection() {
                         <h3>
                             {
                                 data.length > 0 ?(
-                                    data.map((dat: any, i: number) => {
+                                    data.map((dat: ProgressdataInterface, i: number) => {
                                         let xp = 0
-                                        data.forEach((data: any) => {
+                                        data.forEach((data: ProgressdataInterface) => {
                                             xp = xp + data?.xp
                                         });
                                         return (
@@ -134,7 +157,7 @@ export default function ProfileSection() {
                         <h1 className="text-lg 2xl:text-4xl font-semibold">Level</h1>
                         {
                             data.length> 0 ?(
-                                data.slice(0, 1).map((dat: any, i: number) => (
+                                data.slice(0, 1).map((dat: ProgressdataInterface, i: number) => (
                                     <h1 key={i} className="2xl:text-3xl">{dat.level}</h1>
                                 ))
                             ):(
@@ -148,7 +171,7 @@ export default function ProfileSection() {
                     <h1 className=" text-lg 2xl:text-4xl font-semibold">Learning Streak</h1>
                     {
                         data.length > 0?(
-                            data.slice(0, 1).map((dat: any, i: number) => (
+                            data.slice(0, 1).map((dat: ProgressdataInterface, i: number) => (
                                 <h1 key={i} className="2xl:text-3xl">{dat.currentStreak} days</h1>
                             ))
                         ):(
@@ -162,7 +185,7 @@ export default function ProfileSection() {
                 <div className={`overflow-auto h-auto w-full flex flex-col gap-2 `}>
 
                     {completedPaths.length > 0 ? (
-                        completedPaths.map((dat: any, i: number) => (
+                        completedPaths.map((dat: datainterface, i: number) => (
                             <div
                                 key={i}
                                 className="w-[80%] h-[80%] border-[1px] border-green-600 p-4 rounded-xl mx-auto flex flex-col justify-between"

@@ -1,6 +1,6 @@
 'use client'
 import Navbar from "@/components/Navbar";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { downloadPDF } from "@/utils/downLoadpdf";
@@ -8,22 +8,25 @@ import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+interface datastepsinterface {
+    title: string;
+    status: string;
+    completedAt: Date | null;
+}
+
 export default function Page() {
 
     const [goal, setGoal] = useState('');
     const [isloading, setIsLoading] = useState(false)
     const { getToken } = useAuth()
-    const [datastep, setDataSteps] = useState([])
+    const [datastep, setDataSteps] = useState<datastepsinterface[]>([])
     const navigate = useRouter();
 
     const handleClick = async () => {
         setIsLoading(true)
         const token = await getToken()
-        console.log(goal)
 
-        // console.log(token)
-
-        const res = await fetch('http://localhost:6969/learning', {
+        const res = await fetch('https://ailearningpathgenerator.onrender.com/learning', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -33,7 +36,6 @@ export default function Page() {
         })
 
         const resData = await res.json()
-        console.log(resData)
         setDataSteps(resData);
         setIsLoading(false)
     }
@@ -41,7 +43,7 @@ export default function Page() {
     const startClick = async () => {
 
         const token = await getToken();
-        const res = await fetch('http://localhost:6969/learning/start', {
+        const res = await fetch('https://ailearningpathgenerator.onrender.com/learning/start', {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -97,7 +99,7 @@ export default function Page() {
                         >
                             {
                                 datastep.length > 0 ? (
-                                    datastep.map((dat: any, i: number) => (
+                                    datastep.map((dat: datastepsinterface, i: number) => (
                                         <>
                                             <AccordionItem value={`item-${i + 1}`}>
                                                 <AccordionTrigger>

@@ -4,19 +4,13 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import Navbar from "@/components/Navbar";
 import WhySkillRoute from "@/components/WhySkillRoute";
-import { AppDispatch } from "@/redux/store";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/slice/authSlice";
-import { Menu } from "lucide-react";
+import { useEffect } from "react";
 
 export default function Home() {
 
   const { user, isSignedIn } = useUser();
-  const dispatch = useDispatch<AppDispatch>();
   const { getToken } = useAuth();
-  const [close,setClose] = useState(false)
 
   useEffect(() => {
     const syncUser = async () => {
@@ -31,7 +25,7 @@ export default function Home() {
         email: user.emailAddresses[0].emailAddress,
         imageUrl: user?.imageUrl
       }
-      const response = await fetch('http://localhost:6969/auth',
+      const response = await fetch('https://ailearningpathgenerator.onrender.com/auth',
         {
           method: "POST",
           headers: {
@@ -41,20 +35,12 @@ export default function Home() {
           body: JSON.stringify(req)
         }
       )
-
-      const resdata = await response.json();
-      dispatch(setUser(resdata.user));
+      await response.json();
     }
 
     syncUser()
-  }, [isSignedIn])
+  }, [isSignedIn,user,getToken])
 
-  const handleClose = () =>{
-    if(!close){
-      setClose(true)
-    }
-    setClose(false)
-  }
 
   return (
     <>
