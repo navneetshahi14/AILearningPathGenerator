@@ -57,11 +57,8 @@ export default function Page() {
 
     const handleClick = async (i: number) => {
         setClose(true);
-        if (data && data[i]) {
-            setDataId(data[i]?._id);
-            setDatastep(data[i].steps);
-        }
-
+        setDataId(data[i]?._id);
+        setDatastep(data[i].steps);
     }
 
     const MarkDone = async (learningPathId: string, stepIndex: number, status: string) => {
