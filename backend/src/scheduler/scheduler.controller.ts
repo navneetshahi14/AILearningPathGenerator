@@ -17,7 +17,6 @@ export class SchedulerController {
   }
 
   @Get('send-reminder')
-  @UseGuards(ClerkAuthGuard)
   async sendReminder() {
     return this.schedulerService.sendReminder();
   }

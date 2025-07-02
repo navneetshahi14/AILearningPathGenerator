@@ -41,6 +41,8 @@ export class SchedulerService {
     const todayStart = moment(now).startOf('day').toDate();
     const todayEnd = moment(now).endOf('day').toDate();
 
+    console.log(todayEnd, todayStart);
+
     const schedulers = await this.scheduler
       .find({
         reminderTime: { $gte: todayStart, $lte: todayEnd },
@@ -53,6 +55,8 @@ export class SchedulerService {
         },
       });
 
+    console.log(schedulers);
+
     for (const schedule of schedulers) {
       const learnPath =
         schedule.learningPath as unknown as LearningPathDocument & {
@@ -60,7 +64,7 @@ export class SchedulerService {
             email: string;
           };
         };
-
+      console.log(learnPath.createdBy);
       if (learnPath.status !== 'done') {
         const userEmail = learnPath?.createdBy.email;
 

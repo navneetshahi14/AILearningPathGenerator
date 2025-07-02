@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class LearningPath {
@@ -29,8 +29,8 @@ export class LearningPath {
   @Prop({ default: 'pending' })
   status: 'pending' | 'done';
 
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  createdBy: Types.ObjectId;
+  @Prop({ type: String, ref: 'User', required: true })
+  createdBy: string;
 }
 
 export type LearningPathDocument = LearningPath & Document;
