@@ -6,6 +6,7 @@ import { LearningPathDocument } from 'src/learning-path/Schema/learning-path.sch
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment';
 import { MailService } from 'src/common/mail/mail.service';
+// import { User, UserDocument } from 'src/auth/Schema/user.schema';
 
 @Injectable()
 export class SchedulerService {
@@ -13,6 +14,8 @@ export class SchedulerService {
     @InjectModel(Scheduler.name)
     private scheduler: Model<SchedulerDocument>,
     private readonly mailService: MailService,
+    // @InjectModel(User.name)
+    // private userMail: Model<UserDocument>,
   ) {}
 
   async setReminder(learningPathId: string, reminderTime: Date) {
@@ -41,8 +44,6 @@ export class SchedulerService {
     const todayStart = moment(now).startOf('day').toDate();
     const todayEnd = moment(now).endOf('day').toDate();
 
-    console.log(todayEnd, todayStart);
-
     const schedulers = await this.scheduler
       .find({
         reminderTime: { $gte: todayStart, $lte: todayEnd },
@@ -55,24 +56,25 @@ export class SchedulerService {
         },
       });
 
-    console.log(schedulers);
-
     for (const schedule of schedulers) {
-      const learnPath =
-        schedule.learningPath as unknown as LearningPathDocument & {
-          createdBy: {
-            email: string;
-          };
-        };
-      console.log(learnPath.createdBy);
-      if (learnPath.status !== 'done') {
-        const userEmail = learnPath?.createdBy.email;
+      const learnPath = schedule.learningPath as unknown as
+        | (LearningPathDocument & {
+            createdBy: {
+              email: string;
+            };
+          })
+        | null;
 
-        await this.mailService.sendMail(
-          userEmail,
-          '🔔 SkillRoute Daily Reminder',
-          `Today's Task: ${learnPath.title}\nEstimated Duration: ${learnPath.estimationDuration}`,
-        );
+      if (learnPath && learnPath.createdBy && learnPath.status !== 'done') {
+        const userEmail = learnPath.createdBy.email;
+
+        if (userEmail) {
+          await this.mailService.sendMail(
+            userEmail,
+            '🔔 SkillRoute Daily Reminder',
+            `Today's Task: ${learnPath.title}\nEstimated Duration: ${learnPath.estimationDuration}`,
+          );
+        }
       }
     }
   }

@@ -7,6 +7,7 @@ import {
 import { Model } from 'mongoose';
 import * as moment from 'moment';
 import { ProgressService } from 'src/progess/progress.service';
+import { User, UserDocument } from 'src/auth/Schema/user.schema';
 
 @Injectable()
 export class LearningPathService {
@@ -14,6 +15,8 @@ export class LearningPathService {
     @InjectModel(LearningPath.name)
     private learningPath: Model<LearningPathDocument>,
     private progressService: ProgressService,
+    @InjectModel(User.name)
+    private User: Model<UserDocument>,
   ) {}
 
   async createPath(
@@ -26,17 +29,19 @@ export class LearningPathService {
     userId: string,
     estimatedDuration?: string,
   ) {
+    const user = await this.User.findOne({ clerkUserId: userId });
     return this.learningPath.create({
       title,
       steps,
       estimatedDuration,
-      createdBy: userId,
+      createdBy: user?._id,
     });
   }
 
   async GetUsersPath(userId: string) {
+    const user = await this.User.findOne({ clerkUserId: userId });
     return this.learningPath
-      .find({ createdBy: userId })
+      .find({ createdBy: user?._id })
       .sort({ createdAt: -1 });
   }
 

@@ -29,7 +29,7 @@ export class LearningPath {
   @Prop({ default: 'pending' })
   status: 'pending' | 'done';
 
-  @Prop({ type: String, ref: 'User', required: true })
+  @Prop({ ref: 'User', required: true, type: String })
   createdBy: string;
 }
 

@@ -9,6 +9,7 @@ import {
 import { ProgressService } from 'src/progess/progress.service';
 import { ProgressModule } from 'src/progess/progress.module';
 import { OpenAiModule } from 'src/common/openAi/openai.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { OpenAiModule } from 'src/common/openAi/openai.module';
     ]),
     forwardRef(() => ProgressModule),
     forwardRef(() => OpenAiModule),
+    forwardRef(() => AuthModule),
   ],
   controllers: [LearningPathController],
   providers: [LearningPathService, ProgressService],
