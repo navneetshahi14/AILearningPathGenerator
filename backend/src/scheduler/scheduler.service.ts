@@ -4,7 +4,7 @@ import { Scheduler, SchedulerDocument } from './Schema/schedular.schema';
 import { Model } from 'mongoose';
 import { LearningPathDocument } from 'src/learning-path/Schema/learning-path.schema';
 import { Cron } from '@nestjs/schedule';
-import moment from 'moment';
+import * as moment from 'moment';
 import { MailService } from 'src/common/mail/mail.service';
 
 @Injectable()
