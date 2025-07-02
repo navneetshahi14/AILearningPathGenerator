@@ -16,10 +16,23 @@ export class SchedulerService {
   ) {}
 
   async setReminder(learningPathId: string, reminderTime: Date) {
-    return this.scheduler.create({
+    const findTimer = await this.scheduler.findOne({
       learningPath: learningPathId,
-      reminderTime,
     });
+    if (!findTimer) {
+      return this.scheduler.create({
+        learningPath: learningPathId,
+        reminderTime,
+      });
+    }
+
+    return this.scheduler.findByIdAndUpdate(
+      findTimer._id,
+      {
+        reminderTime,
+      },
+      { new: true },
+    );
   }
 
   @Cron('0 9 * * *')
