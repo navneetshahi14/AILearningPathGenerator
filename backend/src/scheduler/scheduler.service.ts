@@ -38,7 +38,7 @@ export class SchedulerService {
     );
   }
 
-  @Cron('* * * * *')
+  @Cron('0 9 * * *')
   async sendReminder() {
     const now = moment();
     const todayStart = moment(now).startOf('day').toDate();
