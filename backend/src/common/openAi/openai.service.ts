@@ -92,7 +92,7 @@ export class OpenAiService {
 
     const chatCompletion = await this.client.chatCompletion({
       provider: 'featherless-ai',
-      model: 'mistralai/Magistral-Small-2506',
+      model: process.env.MODEL_AI,
       messages: [
         {
           role: 'user',
