@@ -87,15 +87,14 @@ export default function ProfileSection() {
                     width={120}
                     className="rounded-full 2xl:h-[20vh] 2xl:w-[10vw] object-cover shadow-2xl"
                 />
-                <div className="text-center">
-                    <h1 className="text-2xl font-semibold 2xl:text-4xl">{user?.fullName}</h1>
-                    <h1 className="text-sm 2xl:text-2xl font-semibold text-gray-800 ">{user?.emailAddresses[0].emailAddress}</h1>
+                <div className="text-center overflow-hidden text-wrap">
+                    <h1 className="text-2xl font-semibold 2xl:text-xl">{user?.fullName}</h1>
+                    <h1 className="text-sm 2xl:text-xl font-semibold text-gray-800 ">{user?.emailAddresses[0].emailAddress}</h1>
                 </div>
             </div>
             <div className="w-full lg:w-[60%] lg:h-[50%] py-2 bg-white/30 rounded-xl shadow-xl flex flex-col p-2 gap-5 overflow-hidden">
-                <h1 className="text-2xl 2xl:text-4xl font-bold">Active Learning Path</h1>
+                <h1 className="text-2xl 2xl:text-xl font-bold">Active Learning Path</h1>
                 <div className="overflow-auto h-[90%] w-full flex flex-col gap-2">
-
                     {
                         data1.length > 0 ? (
 
@@ -112,7 +111,7 @@ export default function ProfileSection() {
                                             <h1 className="text-2xl font-bold">{dat?.title}</h1>
                                             <h3 className="text-lg font-semibold text-gray-700">{count}/{dat.steps.length} Steps</h3>
                                         </div>
-                                        <Button className="2xl:text-3xl p-2 h-auto">
+                                        <Button className="2xl:text-xl p-2 h-auto">
                                             <Link href="/Learnings">
                                                 <h1>Go To Learning Page</h1>
                                             </Link>
@@ -133,7 +132,7 @@ export default function ProfileSection() {
             <div className="w-full lg:w-[20%] lg:h-[50%] p-2 lg:p-2 bg-white/30 rounded-xl shadow-xl flex flex-col justify-center items-center gap-5">
                 <div className="flex w-[80%] gap-20 ">
                     <div>
-                        <h1 className="text-lg 2xl:text-4xl font-semibold">XP</h1>
+                        <h1 className="text-lg 2xl:text-xl font-semibold">XP</h1>
                         <h3>
                             {
                                 data.length > 0 ?(
@@ -143,45 +142,45 @@ export default function ProfileSection() {
                                             xp = xp + data?.xp
                                         });
                                         return (
-                                            <p className="2xl:text-3xl" key={i}>{xp}</p>
+                                            <p className="2xl:text-xl" key={i}>{xp}</p>
                                         )
                                     })
 
                                 ):(
-                                    <p className="2xl:text-3xl">{0}</p>
+                                    <p className="2xl:text-xl">{0}</p>
                                 )
                             }
                         </h3>
                     </div>
                     <div>
-                        <h1 className="text-lg 2xl:text-4xl font-semibold">Level</h1>
+                        <h1 className="text-lg 2xl:text-xl font-semibold">Level</h1>
                         {
                             data.length> 0 ?(
                                 data.slice(0, 1).map((dat: ProgressdataInterface, i: number) => (
-                                    <h1 key={i} className="2xl:text-3xl">{dat.level}</h1>
+                                    <h1 key={i} className="2xl:text-xl">{dat.level}</h1>
                                 ))
                             ):(
-                                <h1 className="2xl:text-3xl">{0}</h1>
+                                <h1 className="2xl:text-xl">{0}</h1>
                             )
                         }
                     </div>
                 </div>
                 <div className="h-[0.1vh] w-[80%] bg-black"></div>
                 <div className="flex flex-col w-[80%] gap-2  ">
-                    <h1 className=" text-lg 2xl:text-4xl font-semibold">Learning Streak</h1>
+                    <h1 className=" text-lg 2xl:text-xl font-semibold">Learning Streak</h1>
                     {
                         data.length > 0?(
                             data.slice(0, 1).map((dat: ProgressdataInterface, i: number) => (
-                                <h1 key={i} className="2xl:text-3xl">{dat.currentStreak} days</h1>
+                                <h1 key={i} className="2xl:text-xl">{dat.currentStreak} days</h1>
                             ))
                         ):(
-                            <h1 className="2xl:text-3xl">{0} days</h1>
+                            <h1 className="2xl:text-xl">{0} days</h1>
                         )
                     }
                 </div>
             </div>
             <div className="w-full lg:w-[60%] lg:h-[50%] bg-white/30 rounded-xl shadow-xl flex flex-col p-2 gap-5 overflow-hidden">
-                <h1 className="text-2xl font-bold 2xl:text-4xl">Completed Learning Path</h1>
+                <h1 className="text-2xl font-bold 2xl:text-xl">Completed Learning Path</h1>
                 <div className={`overflow-auto h-auto w-full flex flex-col gap-2 `}>
 
                     {completedPaths.length > 0 ? (
@@ -199,8 +198,8 @@ export default function ProfileSection() {
                             </div>
                         ))
                     ) : (
-                        <div className="text-center 2xl:text-3xl text-gray-600 text-lg font-semibold">
-                            🚧 No learning path completed yet.
+                        <div className="text-center 2xl:text-2xl text-gray-600 text-lg font-semibold">
+                            🚧 No learning path completed yet. 🚧
                         </div>
                     )}
                 </div>

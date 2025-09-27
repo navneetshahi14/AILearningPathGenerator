@@ -74,13 +74,13 @@ export default function Page() {
                 <Navbar />
                 <div className="min-h-[100vh] h-auto overflow-auto w-full flex justify-center items-center flex-col  gap-10">
                     <div className="h-[30vh] mt-12 w-full flex flex-col justify-center items-center">
-                        <div className="text-center flex flex-col gap-4">
-                            <h1 className="text-6xl 2xl:text-8xl font-extrabold">Generate Your Custom Skill Route</h1>
-                            <h4 className="text-xl 2xl:text-4xl">What Do You Want to Learn?</h4>
+                        <div className="text-center flex flex-col gap-4 xl:gap-5">
+                            <h1 className="text-6xl 2xl:text-5xl font-extrabold">Generate Your Custom Skill Route</h1>
+                            <h4 className="text-xl 2xl:text-2xl">What Do You Want to Learn?</h4>
                         </div>
-                        <div className="w-[80%] flex justify-center items-center gap-5 ">
-                            <Input onChange={(e) => setGoal(e.target.value)} placeholder="Enter what you want to learn" className="w-[60%] border-black 2xl:text-3xl 2xl:h-auto 2xl:p-1" />
-                            <Button onClick={handleClick} className="w-[30%] 2xl:text-2xl 2xl:h-auto cursor-pointer text-amber-200 uppercase" variant={'default'}>
+                        <div className="w-[80%] flex justify-center items-center gap-5 mt-1 ">
+                            <Input onChange={(e) => setGoal(e.target.value)} placeholder="Enter what you want to learn" className="w-[60%] border-black 2xl:text-xl 2xl:h-auto 2xl:p-1" />
+                            <Button onClick={handleClick} className="w-[30%] 2xl:text-lg 2xl:h-auto cursor-pointer text-amber-200 uppercase" variant={'default'}>
                                 {
                                     isloading ? "Loading....." : "Generate"
                                 }
@@ -88,7 +88,7 @@ export default function Page() {
                         </div>
                     </div>
                     <div className="min-h-[30vh] w-[80vw] bg-amber-500/40 rounded-3xl shadow-2xl border-black border-[.5px] overflow-hidden p-2 px-5">
-                        <p className="font-bold 2xl:text-xl">
+                        <p className="font-bold 2xl:text-[0.95rem]">
                             {
                                 datastep.length > 0 ? goal : "Example"
                             }
@@ -104,7 +104,7 @@ export default function Page() {
                                         <>
                                             <AccordionItem value={`item-${i + 1}`}>
                                                 <AccordionTrigger>
-                                                    <p className="2xl:text-2xl">
+                                                    <p className="2xl:text-xl">
                                                         {dat?.title}
                                                     </p>
                                                 </AccordionTrigger>
@@ -115,28 +115,28 @@ export default function Page() {
                                     <>
                                         <AccordionItem value="item-1">
                                             <AccordionTrigger>
-                                                <p className="2xl:text-2xl">
+                                                <p className="2xl:text-xl">
                                                     Step1: Learn HTML & CSS
                                                 </p>
                                             </AccordionTrigger>
                                         </AccordionItem>
                                         <AccordionItem value="item-2">
                                             <AccordionTrigger>
-                                                <p className="2xl:text-2xl">
+                                                <p className="2xl:text-xl">
                                                     Step 2: Learn JavaScript Fundamentals
                                                 </p>
                                             </AccordionTrigger>
                                         </AccordionItem>
                                         <AccordionItem value="item-3">
                                             <AccordionTrigger>
-                                                <p className="2xl:text-2xl">
+                                                <p className="2xl:text-xl">
                                                     Step 3: Learn React.js
                                                 </p>
                                             </AccordionTrigger>
                                         </AccordionItem>
                                         <AccordionItem value="item-4">
                                             <AccordionTrigger>
-                                                <p className="2xl:text-2xl">
+                                                <p className="2xl:text-xl">
                                                     Step 4: Backend (Node.js + Express)
                                                 </p>
                                             </AccordionTrigger>
@@ -147,10 +147,10 @@ export default function Page() {
                         </Accordion>
                     </div>
                     <div className=" p-2 flex gap-10 ">
-                        <Button onClick={() => startClick()} disabled={!(datastep.length > 0)} className="w-[30vw] h-auto cursor-pointer text-xl 2xl:text-5xl 2xl:p-2" variant={'default'}>
+                        <Button onClick={() => startClick()} disabled={!(datastep.length > 0)} className="w-[30vw] 2xl:w-[20vw] h-auto cursor-pointer text-xl 2xl:text-2xl 2xl:p-2" variant={'default'}>
                             Start
                         </Button>
-                        <Button onClick={handleDownload} disabled={!(datastep.length > 0)} className="w-[30vw] h-auto cursor-pointer text-xl 2xl:text-5xl 2xl:p-2" variant={'outline'}>
+                        <Button onClick={handleDownload} disabled={!(datastep.length > 0)} className="w-[30vw] 2xl:w-[20vw] h-auto cursor-pointer text-xl 2xl:text-2xl 2xl:p-2" variant={'outline'}>
                             Export as PDF
                         </Button>
                     </div>

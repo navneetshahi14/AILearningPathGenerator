@@ -114,7 +114,7 @@ export default function Page() {
                         <div className="h-[100%] w-full p-2 flex flex-wrap gap-5 items-center px-[8vw] py-10">
                             {
                                 isloading === true ? (
-                                    <div className="text-xl 2xl:text-4xl">Loading</div>
+                                    <div className="text-xl 2xl:text-2xl">Loading</div>
                                 ) : (
                                     data.length > 0 ? (
                                         data.map((data: datainterface, i: number) => {
@@ -127,13 +127,13 @@ export default function Page() {
                                             return (
                                                 <div key={i} className="lg:h-[30vh] lg:w-[20vw] w-[35vw] h-[30vh] overflow-hidden bg-white/50 shadow-xl rounded-xl p-2 2xl:p-5 flex flex-col justify-between cursor-pointer" >
                                                     <div onClick={() => handleClick(i)} className="">
-                                                        <h1 className="text-2xl 2xl:text-4xl font-bold">{data?.title}</h1>
-                                                        <h2 className="2xl:text-2xl" >Total Steps : {data?.steps?.length}</h2>
-                                                        <h2 className="2xl:text-2xl" >Completed Steps: {count}</h2>
+                                                        <h1 className="text-2xl 2xl:text-xl font-bold">{data?.title}</h1>
+                                                        <h2 className="2xl:text-lg" >Total Steps : {data?.steps?.length}</h2>
+                                                        <h2 className="2xl:text-lg" >Completed Steps: {count}</h2>
                                                     </div>
                                                     <div className=" flex gap-5 mx-auto 2xl:gap-20 2xl:py-8">
-                                                        <Button onClick={() => clickDelete(data?._id)} variant={'secondary'} className="shadow-lg cursor-pointer mb-5 h-auto w-auto 2xl:scale-[2]"><Trash /></Button>
-                                                        <Button onClick={() => clickDownload(i)} variant={'secondary'} className="shadow-lg cursor-pointer mb-5 h-auto w-auto 2xl:scale-[2]"><Download /></Button>
+                                                        <Button onClick={() => clickDelete(data?._id)} variant={'secondary'} className="shadow-lg cursor-pointer mb-5 h-auto w-auto 2xl:scale-[1.03]"><Trash /></Button>
+                                                        <Button onClick={() => clickDownload(i)} variant={'secondary'} className="shadow-lg cursor-pointer mb-5 h-auto w-auto 2xl:scale-[1.03]"><Download /></Button>
                                                     </div>
                                                 </div>
                                             )
