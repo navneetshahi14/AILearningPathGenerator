@@ -24,7 +24,9 @@ const Navbar = () => {
       >
         <div className="">
           <p className=" text-2xl lg:text-[1.2rem] 2xl:text-[1.5rem] font-semibold 2xl:text-3xl cursor-pointer">
-            SkillRoute
+            <Link href={'/'}>
+              SkillRoute
+            </Link>
           </p>
         </div>
         <div className="">

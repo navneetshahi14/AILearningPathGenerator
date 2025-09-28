@@ -8,6 +8,7 @@ import { SchedulerModule } from './scheduler/scheduler.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MailModule } from './common/mail/mail.module';
 import { ProgressModule } from './progess/progress.module';
+import { KeepServiceAlive } from './config/keep-alive.service';
 
 @Module({
   imports: [
@@ -19,5 +20,6 @@ import { ProgressModule } from './progess/progress.module';
     MailModule,
     ProgressModule,
   ],
+  providers:[KeepServiceAlive],
 })
 export class AppModule {}
