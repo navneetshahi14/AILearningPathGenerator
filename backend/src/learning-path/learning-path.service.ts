@@ -5,7 +5,7 @@ import {
   LearningPathDocument,
 } from './Schema/learning-path.schema';
 import { Model } from 'mongoose';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ProgressService } from 'src/progess/progress.service';
 import { User, UserDocument } from 'src/auth/Schema/user.schema';
 
@@ -18,7 +18,6 @@ export class LearningPathService {
     @InjectModel(User.name)
     private User: Model<UserDocument>,
   ) {}
-
   async createPath(
     title: string,
     steps: {
