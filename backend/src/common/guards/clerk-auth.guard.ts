@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
-import jwksRsa from 'jwks-rsa';
+import * as jwksRsa from 'jwks-rsa';
 
 const client = jwksRsa({
   jwksUri: process.env.CLERK_JWKS_URI!,
