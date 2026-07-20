@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
+import { ClerkAuthGuard } from '../common/guards/clerk-auth.guard';
 
 interface userData {
   user: {

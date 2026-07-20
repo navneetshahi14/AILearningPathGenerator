@@ -6,10 +6,10 @@ import {
   LearningPath,
   LearningPathSchema,
 } from './Schema/learning-path.schema';
-import { ProgressService } from 'src/progess/progress.service';
-import { ProgressModule } from 'src/progess/progress.module';
-import { OpenAiModule } from 'src/common/openAi/openai.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { ProgressService } from '../progess/progress.service';
+import { ProgressModule } from '../progess/progress.module';
+import { OpenAiModule } from '../common/openAi/openai.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [

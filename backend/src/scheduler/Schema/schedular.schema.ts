@@ -4,10 +4,10 @@ import { Types, Document } from 'mongoose';
 @Schema({ timestamps: true })
 export class Scheduler {
   @Prop({ type: Types.ObjectId, ref: 'LearningPath', required: true })
-  learningPath: Types.ObjectId;
+  learningPath!: Types.ObjectId;
 
   @Prop({ type: Date, default: null })
-  reminderTime: Date;
+  reminderTime!: Date;
 }
 
 export type SchedulerDocument = Scheduler & Document;

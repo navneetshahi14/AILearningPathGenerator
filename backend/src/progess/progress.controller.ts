@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Body, Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ProgressService } from './progress.service';
-import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
+import { ClerkAuthGuard } from '../common/guards/clerk-auth.guard';
 
 @Controller('progress')
 export class ProgressController {

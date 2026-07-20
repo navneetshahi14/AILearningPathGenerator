@@ -12,4 +12,4 @@ async function bootstrap() {
   app.use(express.json());
   await app.listen(process.env.PORT ?? 6969);
 }
-bootstrap();
+void bootstrap();

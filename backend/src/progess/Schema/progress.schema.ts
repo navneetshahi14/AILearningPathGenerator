@@ -4,25 +4,25 @@ import { Types } from 'mongoose';
 @Schema({ timestamps: true })
 export class UserProgress {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true, unique: true })
-  user: Types.ObjectId;
+  user!: Types.ObjectId;
 
   @Prop({ default: 0 })
-  xp: number;
+  xp!: number;
 
   @Prop({ default: 1 })
-  level: number;
+  level!: number;
 
   @Prop({ default: 0 })
-  currentStreak: number;
+  currentStreak!: number;
 
   @Prop({ default: 0 })
-  longestStreak: number;
+  longestStreak!: number;
 
   @Prop({ default: [] })
-  badge: string[];
+  badge!: string[];
 
   @Prop({ default: null })
-  lastActivity: Date;
+  lastActivity!: Date;
 }
 
 export type UserProgressDocument = UserProgress & Document;

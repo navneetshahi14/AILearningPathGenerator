@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Scheduler, SchedulerDocument } from './Schema/schedular.schema';
 import { Model } from 'mongoose';
-import { LearningPathDocument } from 'src/learning-path/Schema/learning-path.schema';
+import { LearningPathDocument } from '../learning-path/Schema/learning-path.schema';
 import { Cron } from '@nestjs/schedule';
-import * as moment from 'moment';
-import { MailService } from 'src/common/mail/mail.service';
+import moment from 'moment';
+import { MailService } from '../common/mail/mail.service';
 // import { User, UserDocument } from 'src/auth/Schema/user.schema';
 
 @Injectable()

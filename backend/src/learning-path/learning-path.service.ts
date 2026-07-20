@@ -6,8 +6,8 @@ import {
 } from './Schema/learning-path.schema';
 import { Model } from 'mongoose';
 import moment from 'moment';
-import { ProgressService } from 'src/progess/progress.service';
-import { User, UserDocument } from 'src/auth/Schema/user.schema';
+import { ProgressService } from '../progess/progress.service';
+import { User, UserDocument } from '../auth/Schema/user.schema';
 
 @Injectable()
 export class LearningPathService {

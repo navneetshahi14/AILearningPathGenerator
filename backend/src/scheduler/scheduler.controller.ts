@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { SchedulerService } from './scheduler.service';
-import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
+import { ClerkAuthGuard } from '../common/guards/clerk-auth.guard';
 
 @Controller('scheduler')
 export class SchedulerController {

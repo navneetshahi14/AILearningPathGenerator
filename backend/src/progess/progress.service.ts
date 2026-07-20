@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Model } from 'mongoose';
 import {
   LearningPath,
   LearningPathDocument,
-} from 'src/learning-path/Schema/learning-path.schema';
+} from '../learning-path/Schema/learning-path.schema';
 import { UserProgress, UserProgressDocument } from './Schema/progress.schema';
 
 @Injectable()

@@ -12,8 +12,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { LearningPathService } from './learning-path.service';
-import { OpenAiService } from 'src/common/openAi/openai.service';
-import { ClerkAuthGuard } from 'src/common/guards/clerk-auth.guard';
+import { OpenAiService } from '../common/openAi/openai.service';
+import { ClerkAuthGuard } from '../common/guards/clerk-auth.guard';
 
 @Controller('learning')
 export class LearningPathController {

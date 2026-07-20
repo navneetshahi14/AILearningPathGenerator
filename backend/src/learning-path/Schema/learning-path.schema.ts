@@ -4,7 +4,7 @@ import { Document, Types } from 'mongoose';
 @Schema({ timestamps: true })
 export class LearningPath {
   @Prop({ required: true })
-  title: string;
+  title!: string;
 
   @Prop([
     {
@@ -17,20 +17,20 @@ export class LearningPath {
       completedAt: { type: Date, default: null },
     },
   ])
-  steps: {
+  steps!: {
     title: string;
     status: 'pending' | 'done';
     completedAt?: Date;
   }[];
 
   @Prop()
-  estimationDuration: string;
+  estimationDuration!: string;
 
   @Prop({ default: 'pending' })
-  status: 'pending' | 'done';
+  status!: 'pending' | 'done';
 
   @Prop({ ref: 'User', required: true, type: Types.ObjectId })
-  createdBy: Types.ObjectId;
+  createdBy!: Types.ObjectId;
 }
 
 export type LearningPathDocument = LearningPath & Document;
